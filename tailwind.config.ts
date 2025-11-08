@@ -86,6 +86,10 @@ export default {
         sans: ["var(--font-sans)"],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
+        poppins: ["Poppins", "sans-serif"],
+        space: ["Space Grotesk", "sans-serif"],
+        playfair: ["Playfair Display", "serif"],
+        roboto: ["Roboto Mono", "monospace"],
       },
       keyframes: {
         "accordion-down": {

@@ -1,6 +1,7 @@
 import { ArrowRight, Download } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import profileImage from "@assets/generated_images/Professional_profile_headshot_6e95066a.png";
+import profileImage from "@assets/generated_images/mahek_profile.jpeg";
 import wavingHand from "@assets/generated_images/Waving_hand_icon_1d9c5e4b.png";
 
 export default function Hero() {
@@ -11,59 +12,127 @@ export default function Hero() {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-purple-500 to-pink-500 opacity-90" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent)]" />
-      
-      <div className="relative z-10 max-w-4xl mx-auto px-6 py-20 text-center">
-        <div className="mb-8 flex justify-center">
-          <img
+    <section id="home" className="min-h-screen flex items-center justify-center bg-background pt-20">
+      <motion.div
+        className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div
+          className="mb-8 flex justify-center mt-8 sm:mt-12"
+          variants={itemVariants}
+        >
+          <motion.img
             src={profileImage}
             alt="Profile"
-            className="w-64 h-64 rounded-full border-8 border-white/20 shadow-2xl object-cover"
+            className="w-48 h-48 sm:w-64 sm:h-64 rounded-full border-4 border-border shadow-2xl object-cover"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 20,
+              delay: 0.5,
+            }}
+            whileHover={{ scale: 1.05 }}
             data-testid="img-profile"
           />
-        </div>
+        </motion.div>
 
-        <div className="mb-4 flex items-center justify-center gap-2">
-          <h2 className="text-xl md:text-2xl font-semibold text-white/90">
-            Hey! I'm <span className="font-bold">Your Name</span>
+        <motion.div
+          className="mb-6 flex items-center justify-center gap-2"
+          variants={itemVariants}
+        >
+          <h2 className="text-xl sm:text-2xl font-semibold text-foreground font-poppins">
+            Hey! I'm <span className="font-bold">Mahek</span>
           </h2>
-          <img src={wavingHand} alt="👋" className="w-8 h-8 animate-bounce" />
-        </div>
+          <motion.img
+            src={wavingHand}
+            alt="👋"
+            className="w-8 h-8"
+            animate={{
+              rotate: [0, 14, -8, 14, -4, 10, 0],
+            }}
+            transition={{
+              duration: 0.6,
+              repeat: Infinity,
+              repeatDelay: 2,
+            }}
+          />
+        </motion.div>
 
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+        <motion.h1
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight font-playfair"
+          variants={itemVariants}
+        >
           Full-Stack Software Engineer
-          <br />
-          <span className="text-white/90">based in India</span>
-        </h1>
+        </motion.h1>
 
-        <p className="text-lg md:text-xl text-white/80 mb-12 max-w-2xl mx-auto">
+        <motion.p
+          className="text-lg sm:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto font-space"
+          variants={itemVariants}
+        >
           Passionate about designing and developing efficient, scalable web applications.
-        </p>
+        </motion.p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button
-            size="lg"
-            className="bg-white text-purple-600 hover:bg-white/90 rounded-full px-8 py-6 text-lg font-semibold"
-            onClick={scrollToContact}
-            data-testid="button-contact"
-          >
-            Contact me
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="bg-white/10 text-white border-2 border-white/30 hover:bg-white/20 backdrop-blur-sm rounded-full px-8 py-6 text-lg font-semibold"
-            data-testid="button-resume"
-          >
-            My Resume
-            <Download className="ml-2 h-5 w-5" />
-          </Button>
-        </div>
-      </div>
+        <motion.div
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          variants={itemVariants}
+        >
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button
+              size="lg"
+              className="bg-white text-black hover:bg-white/90 rounded-full px-6 py-4 text-sm sm:text-base font-semibold"
+              onClick={scrollToContact}
+              data-testid="button-contact"
+            >
+              Contact me
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-2 border-white/30 text-white hover:bg-white hover:text-black rounded-full px-6 py-4 text-sm sm:text-base font-semibold transition-colors"
+              data-testid="button-resume"
+              onClick={() => {
+                // Open resume in new tab
+                const resumeUrl = "/resume.pdf"; // Change this to your resume file path
+                window.open(resumeUrl, "_blank");
+              }}
+            >
+              My Resume
+              <Download className="ml-2 h-4 w-4" />
+            </Button>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
