@@ -1,14 +1,19 @@
 import { Mail } from "lucide-react";
 import { SiGithub, SiLinkedin } from "react-icons/si";
+import { Link } from "wouter";
 
 export default function Footer() {
   return (
     <footer className="py-12 bg-gradient-to-b from-background to-muted/30">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center space-y-6">
-          <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <Link
+            href="/contacts"
+            className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent hover:opacity-80 transition-opacity cursor-pointer"
+            data-testid="link-contacts"
+          >
             Portfolio
-          </div>
+          </Link>
 
           <div className="flex items-center justify-center gap-2 text-muted-foreground">
             <Mail className="h-5 w-5" />
