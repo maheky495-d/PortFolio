@@ -11,7 +11,7 @@ export default defineConfig({
       "@assets": path.resolve(__dirname, "src/assets"),
     },
   },
-  base: '/', // Use absolute paths for Vercel
+  base: '/', // Use absolute paths for Vercel - this ensures assets load correctly
   build: {
     outDir: "dist/public", // frontend build output inside client/dist/public
     emptyOutDir: true,
