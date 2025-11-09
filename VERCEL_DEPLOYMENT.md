@@ -32,3 +32,4 @@ If you get 404 errors:
 4. Commit and push
 5. Check Vercel deployment logs
 
+
