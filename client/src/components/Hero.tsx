@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import profileImage from "../assets/generated_images/mahek_profile.jpeg"; // ✅ Fixed import
 import wavingHand from "../assets/generated_images/Waving_hand_icon_1d9c5e4b.png";
 
+
 export default function Hero() {
   const scrollToContact = () => {
     const element = document.getElementById("contact");

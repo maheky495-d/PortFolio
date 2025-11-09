@@ -11,9 +11,9 @@ export default defineConfig({
       "@assets": path.resolve(__dirname, "src/assets"),
     },
   },
-  root: "./", // keep root as project root
+  base: './', // important for correct asset paths
   build: {
-    outDir: "dist/public", // ✅ frontend build output inside server folder
+    outDir: "dist/public", // frontend build output inside client/dist/public
     emptyOutDir: true,
   },
   server: {
