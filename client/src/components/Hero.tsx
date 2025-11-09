@@ -1,8 +1,8 @@
 import { ArrowRight, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import profileImage from "@assets/generated_images/mahek_profile.jpeg";
-import wavingHand from "@assets/generated_images/Waving_hand_icon_1d9c5e4b.png";
+import profileImage from "../assets/generated_images/mahek_profile.jpeg"; // ✅ Fixed import
+import wavingHand from "../assets/generated_images/Waving_hand_icon_1d9c5e4b.png";
 
 export default function Hero() {
   const scrollToContact = () => {
@@ -36,13 +36,17 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center bg-background pt-20">
+    <section
+      id="home"
+      className="min-h-screen flex items-center justify-center bg-background pt-20"
+    >
       <motion.div
         className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
+        {/* Profile Image */}
         <motion.div
           className="mb-8 flex justify-center mt-8 sm:mt-12"
           variants={itemVariants}
@@ -64,6 +68,7 @@ export default function Hero() {
           />
         </motion.div>
 
+        {/* Heading with waving hand */}
         <motion.div
           className="mb-6 flex items-center justify-center gap-2"
           variants={itemVariants}
@@ -86,6 +91,7 @@ export default function Hero() {
           />
         </motion.div>
 
+        {/* Title */}
         <motion.h1
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight font-playfair"
           variants={itemVariants}
@@ -93,6 +99,7 @@ export default function Hero() {
           Full-Stack Software Engineer
         </motion.h1>
 
+        {/* Subtitle */}
         <motion.p
           className="text-lg sm:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto font-space"
           variants={itemVariants}
@@ -100,10 +107,12 @@ export default function Hero() {
           Passionate about designing and developing efficient, scalable web applications.
         </motion.p>
 
+        {/* Buttons */}
         <motion.div
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
           variants={itemVariants}
         >
+          {/* Contact button */}
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button
               size="lg"
@@ -115,6 +124,8 @@ export default function Hero() {
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </motion.div>
+
+          {/* Resume button */}
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button
               size="lg"
@@ -122,8 +133,7 @@ export default function Hero() {
               className="border-2 border-white/30 text-white hover:bg-white hover:text-black rounded-full px-6 py-4 text-sm sm:text-base font-semibold transition-colors"
               data-testid="button-resume"
               onClick={() => {
-                // Open resume in new tab
-                const resumeUrl = "/resume.pdf"; // Change this to your resume file path
+                const resumeUrl = "/resume.pdf"; // Replace with your actual resume path
                 window.open(resumeUrl, "_blank");
               }}
             >
