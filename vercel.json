@@ -2,15 +2,7 @@
   "buildCommand": "cd client && npm install && npm run build",
   "installCommand": "cd client && npm install",
   "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/api/index" }
-  ],
-  "functions": {
-    "api/index.ts": {
-      "includeFiles": [
-        "server/**",
-        "shared/**",
-        "client/dist/public/**"
-      ]
-    }
-  }
+  ]
 }
