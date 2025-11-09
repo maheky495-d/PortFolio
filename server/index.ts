@@ -80,19 +80,24 @@ async function setupApp() {
   return httpServer;
 }
 
-// For Vercel: Ensure app is initialized before handling requests
-if (process.env.VERCEL) {
-  // Start initialization (don't block export)
-  const initPromise = setupApp();
+// For Vercel: Initialize app immediately (synchronous where possible)
+if (process.env.VERCEL || process.env.VERCEL_ENV) {
+  // Start initialization immediately
+  setupApp().catch((err) => {
+    console.error("Failed to initialize app for Vercel:", err);
+  });
   
-  // Add middleware to wait for initialization on first request
+  // Add middleware to ensure initialization completes before handling requests
   app.use(async (req, res, next) => {
     if (!appInitialized) {
       try {
-        await initPromise;
+        await setupApp();
       } catch (err) {
         console.error("App initialization error:", err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ 
+          error: "Internal server error",
+          message: err instanceof Error ? err.message : "Failed to initialize application"
+        });
       }
     }
     next();

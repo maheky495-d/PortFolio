@@ -1,15 +1,16 @@
 {
-  "version": 2,
   "buildCommand": "cd client && npm install && npm run build",
   "installCommand": "cd client && npm install",
-  "builds": [
-    {
-      "src": "server/index.ts",
-      "use": "@vercel/node"
-    }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/index" }
   ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/server/index.ts" },
-    { "src": "/(.*)", "dest": "/server/index.ts" }
-  ]
+  "functions": {
+    "api/index.ts": {
+      "includeFiles": [
+        "server/**",
+        "shared/**",
+        "client/dist/public/**"
+      ]
+    }
+  }
 }
