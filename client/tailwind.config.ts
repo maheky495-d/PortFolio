@@ -3,8 +3,8 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   darkMode: ["class"],
   content: [
-    "./client/index.html",               // ✅ points to client folder
-    "./client/src/**/*.{js,jsx,ts,tsx}", // ✅ all React/TS files
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
@@ -116,3 +116,4 @@ const config: Config = {
 };
 
 export default config;
+

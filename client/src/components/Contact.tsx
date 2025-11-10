@@ -3,11 +3,8 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
-import type { InsertContact } from "@shared/schema";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -17,30 +14,27 @@ export default function Contact() {
   });
   const { toast } = useToast();
 
-  const submitContactMutation = useMutation({
-    mutationFn: async (data: InsertContact) => {
-      const response = await apiRequest("POST", "/api/contacts", data);
-      return await response.json();
-    },
-    onSuccess: () => {
-      toast({
-        title: "Message sent!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
-      });
-      setFormData({ name: "", email: "", message: "" });
-    },
-    onError: (error: Error) => {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to send message. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    submitContactMutation.mutate(formData);
+    
+    // Create mailto link with form data
+    const subject = encodeURIComponent(`Contact from ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    const mailtoLink = `mailto:mahek495@gmail.com?subject=${subject}&body=${body}`;
+    
+    // Open mail client
+    window.location.href = mailtoLink;
+    
+    // Show success message
+    toast({
+      title: "Opening email client",
+      description: "Your default email client should open. If not, please email me directly.",
+    });
+    
+    // Clear form
+    setFormData({ name: "", email: "", message: "" });
   };
 
   const containerVariants = {
@@ -98,7 +92,6 @@ export default function Contact() {
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               required
-              disabled={submitContactMutation.isPending}
               className="h-12 text-base"
               data-testid="input-name"
             />
@@ -110,7 +103,6 @@ export default function Contact() {
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               required
-              disabled={submitContactMutation.isPending}
               className="h-12 text-base"
               data-testid="input-email"
             />
@@ -121,7 +113,6 @@ export default function Contact() {
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               required
-              disabled={submitContactMutation.isPending}
               className="min-h-40 resize-none text-base"
               data-testid="input-message"
             />
@@ -134,12 +125,11 @@ export default function Contact() {
               <Button
                 type="submit"
                 size="lg"
-                disabled={submitContactMutation.isPending}
                 className="bg-white text-black hover:bg-white/90 rounded-full px-8 py-6 text-base sm:text-lg font-semibold"
                 data-testid="button-submit"
               >
-                {submitContactMutation.isPending ? "Sending..." : "Submit Now"}
-                <ArrowRight className="ml-2 h-5 w-5" />
+                Send Message
+                <Mail className="ml-2 h-5 w-5" />
               </Button>
             </motion.div>
           </motion.div>

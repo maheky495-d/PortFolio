@@ -9,21 +9,10 @@
         "distDir": "dist/public",
         "buildCommand": "npm run build"
       }
-    },
-    {
-      "src": "api/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "server/**",
-          "shared/**"
-        ]
-      }
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/index.ts" },
     { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/dist/public/index.html" }
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
