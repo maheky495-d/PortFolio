@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,7 @@ import { Button } from "@/components/ui/button";
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,12 +17,28 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const sectionToPath: Record<string, string> = {
+    home: "/",
+    about: "/about",
+    projects: "/projects",
+    certifications: "/certifications",
+    contact: "/contact",
+  };
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false);
+    } else if (id === "home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
+  };
+
+  const handleNavigate = (id: string) => {
+    const path = sectionToPath[id] ?? "/";
+    setLocation(path);
+    scrollToSection(id);
+    setIsMobileMenuOpen(false);
   };
 
   const navLinks = [
@@ -39,7 +57,7 @@ export default function Navbar() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
         className="fixed top-6 left-4 sm:left-6 lg:left-8 z-50"
-        style={{ position: 'fixed' }}
+        style={{ position: "fixed" }}
       >
         <h1 className="text-xl sm:text-2xl font-bold text-white font-poppins drop-shadow-lg">
           Mahek Yadav
@@ -63,14 +81,14 @@ export default function Navbar() {
               {navLinks.map((link, index) => (
                 <motion.button
                   key={link.id}
-                  onClick={() => scrollToSection(link.id)}
+                  onClick={() => handleNavigate(link.id)}
                   className="text-sm font-medium text-white/80 hover:text-white transition-all duration-300 relative font-space whitespace-nowrap px-3 py-2 rounded-lg hover:shadow-lg hover:shadow-white/20"
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 + 0.2 }}
-                  whileHover={{ 
+                  whileHover={{
                     y: -2,
-                    textShadow: "0 0 10px rgba(255, 255, 255, 0.5)"
+                    textShadow: "0 0 10px rgba(255, 255, 255, 0.5)",
                   }}
                   data-testid={`link-${link.id}`}
                 >
@@ -103,7 +121,7 @@ export default function Navbar() {
                   {navLinks.map((link) => (
                     <button
                       key={link.id}
-                      onClick={() => scrollToSection(link.id)}
+                      onClick={() => handleNavigate(link.id)}
                       className="block w-full text-left px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors rounded-md font-space"
                       data-testid={`link-mobile-${link.id}`}
                     >
